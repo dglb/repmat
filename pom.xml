@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>laplace</groupId>
-    <artifactId>RH1</artifactId>
+    <artifactId>repmat</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>RH1</name>
+    <name>repmat</name>
 
     <properties>
         <!-- <java.version>11</java.version> -->
@@ -143,7 +143,7 @@
                     <deployables>
                         <deployable>
                             <groupId>laplace</groupId>
-                            <artifactId>RH1</artifactId>
+                            <artifactId>repmat</artifactId>
                             <properties>
                                 <!-- <context>${project.artifactId}-${project.version}</context> -->
                                 <context>${project.artifactId}</context>
