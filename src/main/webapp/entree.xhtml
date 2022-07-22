@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>NE</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, charset=UTF-8"/>
+        <h:outputStylesheet name="css/primeflex.css" />
+        <h:outputStylesheet name="css/layout.css" />
+        <style type="text/css">
+            .ui-filter-column .ui-column-customfilter .custom-filter {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        </style>
+    </h:head>
+
+    <h:body style="margin: 120px 80px;">
+
+        <ui:include src="./menu.xhtml"></ui:include> 
+
+        <h1 style="text-align: center;">Récapitulatif de processus ZRR et convention</h1>
+
+        <p:button value="Nouvel entrant" styleClass="ui-button-raised" style="position: absolute; right: 80px;" outcome="ne" icon="pi pi-plus"/>
+
+
+        <div class="card" style="padding-top: 50px">
+            <h:form id="form">
+
+                <p:dataTable widgetVar="personneTable" var="personne" value="#{entreeView.listPers}" emptyMessage="No person found with given criteria" filteredValue="#{entreeView.filteredListPers}" filterBy="#{entreeView.filterBy}" 
+                             rowKey="#{personne.refnom}" selectionMode="single" selection="#{entreeView.selectedPersonne}" 
+                             paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" pageLinks="5" currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" rows="10" rowsPerPageTemplate="10,20, {ShowAll|'All'}">
+
+                    <p:ajax event="rowSelect" update=":form:manage-product-content" oncomplete="PF('manageProductDialog').show()"/>
+
+                    <ui:remove>
+                        <f:facet name="header">
+                            <span>Liste des personnes</span>
+                        </f:facet>
+                    </ui:remove>
+
+                    <p:column headerText="Name" sortBy="#{personne.nom}" filterBy="#{personne.nom}">
+                        <h:outputText value="#{personne.nom}" />
+                    </p:column>
+
+                    <p:column headerText="Prénom" sortBy="#{personne.prenom}" filterBy="#{personne.prenom}">
+                        <h:outputText value="#{personne.prenom}" />
+                    </p:column>      
+
+                    <p:column field="localDateDebut" headerText="Date de début" filterMatchMode="range" sortOrder="desc">
+                        <f:facet name="filter">
+                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" monthNavigator="true" yearNavigator="true" showButtonBar="true" pattern="dd/MM/yyyy"/>
+                        </f:facet>
+                        <p:outputLabel value="#{entreeView.formatLocalDate(personne.localDateDebut)}"/>
+                    </p:column>
+
+                    <p:column field="localDateFin" headerText="Date de fin" filterMatchMode="range">
+                        <f:facet name="filter">
+                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" monthNavigator="true" yearNavigator="true" showButtonBar="true" pattern="dd/MM/yyyy"/>
+                        </f:facet>
+                        <p:outputLabel value="#{entreeView.formatLocalDate(personne.localDateFin)}"/>
+                    </p:column>       
+
+                    <p:column headerText="Encadrant" sortBy="#{personne.contactLabo}" filterBy="#{personne.contactLabo}">
+                        <h:outputText value="#{personne.contactLabo}" />
+                    </p:column>    
+
+                    <p:column headerText="Site" sortBy="#{personne.site}" filterBy="#{personne.site}">
+                        <h:outputText value="#{personne.site}" />
+                    </p:column>        
+
+                    <ui:remove>
+                        <p:column field="dateNaissance" headerText="Date de naissance" filterMatchMode="range">
+                            <f:facet name="filter">
+                                <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>
+                            </f:facet>
+                            #{personne.getDateNaissance().getDate()}/
+                            #{personne.getDateNaissance().getMonth()+1}/
+                            #{personne.getDateNaissance().getYear()+1900}
+                        </p:column>
+
+
+                        <p:column field="dateDebut" headerText="Date début" filterMatchMode="range" sortOrder="desc">
+                            <f:facet name="filter">
+                                <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" monthNavigator="true" yearNavigator="true"/>
+                            </f:facet>
+                            <!--
+                            #{personne.getDateDebut().getDate()}/
+                            #{personne.getDateDebut().getMonth()+1}/
+                            #{personne.getDateDebut().getYear()+1900}
+                            -->
+                        </p:column>
+                    </ui:remove>
+
+
+
+                    <!--     
+
+                                        <p:column field="localDateDebut" headerText="Date début" filterMatchMode="range" sortOrder="desc">
+                                            <f:facet name="filter">
+                                                <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" monthNavigator="true" yearNavigator="true" /> 
+                                            </f:facet>
+                                        </p:column>
+                                          
+                                        
+                                        <p:column field="toLocalDate(dateDebut)" headerText="Date de début" filterMatchMode="range">
+                                            <f:facet name="filter">
+                                                <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>
+                                            </f:facet>
+                                        </p:column>
+                                       
+                    
+                                        <p:column field="toLocalDate(dateNaissance)" headerText="Date" filterMatchMode="range">
+                                            <f:facet name="filter">
+                                                <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>
+                                            </f:facet>
+                                        </p:column>
+
+                    <p:column headerText="Date début"
+                              filterBy="#{entreeView.toLocalDate(personne.dateDebut)}"
+                              sortBy="#{entreeView.toLocalDate(personne.dateDebut)}"
+                              sortOrder="desc" field="dateDebut">
+                        <f:facet name="filter">
+                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>  
+                        </f:facet>
+                        <p:outputLabel value="#{entreeView.toLocalDate(personne.dateDebut)}"/>
+                    </p:column>
+
+                    <p:column headerText="Date début"
+                              filterBy="{personne.dateDebut}"
+                              sortBy="{personne.dateDebut}">
+                        <f:facet name="filter">
+                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>  
+                        </f:facet>
+                        <p:outputLabel value="{personne.dateDebut}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:outputLabel>
+                    </p:column>
+
+
+                    <p:column field="dateFin" headerText="Date de fin" filterMatchMode="range">
+                        <f:facet name="filter">
+                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>
+                        </f:facet>
+                    </p:column>
+                    -->
+                    <!--
+           
+                              <p:column id="date" 
+                                        headerText="Date"
+                                        filterBy="{personne.dateNaissance}"
+                                        sortBy="{personne.dateNaissance}">
+                                  <f:facet name="filter">
+                                      <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" pattern="dd/MM/yyyy"/>  
+                                  </f:facet>
+                                  <p:outputLabel value="{personne.dateNaissance}">
+                                      <f:convertDateTime pattern="dd/MM/yyyy" />
+                                  </p:outputLabel>
+                              </p:column>
+          
+          
+                              <p:column id="date2" 
+                                        headerText="Date"
+                                        filterFunction="{personne.dateNaissance}"
+                                        filterBy="{personne.dateNaissance}">
+                                  <f:facet name="filter">
+                                      <p:calendar id="cal1" pattern="yyyy-MM-dd">
+                                          <p:ajax event="dateSelect" oncomplete="PF('personneTable').filter()" update="personneTable" />
+                                      </p:calendar>
+                                  </f:facet>
+                                  <p:outputLabel value="{personne.dateNaissance}">
+                                      <f:convertDateTime pattern="yyyy-MM-dd" />
+                                  </p:outputLabel>
+                              </p:column>
+                    -->
+
+
+                    <p:column exportable="false">
+                        <ui:remove>
+                            <p:commandButton icon="pi pi-pencil" update=":form:manage-product-content"
+                                             oncomplete="PF('manageProductDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-info" process="@this">
+                                <f:setPropertyActionListener value="#{personne}" target="#{entreeView.selectedPersonne}"/>
+                                <p:resetInput target=":form:manage-product-content"/>
+                            </p:commandButton>
+                        </ui:remove>
+
+                        <p:button icon="pi pi-pencil" 
+                                  styleClass="edit-button rounded-button ui-button-info"
+                                  outcome="ne.xhtml?refnom=#{personne.refnom}">                         
+                        </p:button>
+                    </p:column>
+
+                </p:dataTable>
+
+
+                <p:dialog header="Product Details" showEffect="fade" modal="true"
+                          widgetVar="manageProductDialog" responsive="true">
+                    <p:outputPanel id="manage-product-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty entreeView.selectedPersonne}">
+                            <div class="p-field">
+                                <p:outputLabel for="@next">refnom</p:outputLabel>
+                                <p:inputText id="refnom" value="#{entreeView.selectedPersonne.refnom}" required="true" disabled="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="@next">nom</p:outputLabel>
+                                <p:inputText id="name" value="#{entreeView.selectedPersonne.nom}"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="@next">prenom</p:outputLabel>
+                                <p:inputText id="prenom2" value="#{entreeView.selectedPersonne.prenom}"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Save" icon="pi pi-check" 
+                                         update="manage-product-content" process="manage-product-content @this"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                         class="ui-button-secondary"/>
+                    </f:facet>
+                </p:dialog>
+
+            </h:form>
+        </div>
+
+
+
+    </h:body>
+</html>
