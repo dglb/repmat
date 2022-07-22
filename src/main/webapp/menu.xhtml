@@ -3,25 +3,10 @@
 
     <div class="layout-topbar2">
         <p:tabMenu activeIndex="#{param.p}">
-            <p:menuitem value="Accueil" outcome="/accueil" icon="pi pi-pw pi-home">
-                <f:param name="p" value="0"/>
-            </p:menuitem>
             <p:menuitem value="Entrée" outcome="/entree" icon="pi pi-fw pi-user-plus">
                 <f:param name="p" value="1"/>
             </p:menuitem>
-            <p:menuitem value="Annuaire" outcome="/annuaire" icon="pi pi-fw pi-users">
-                <f:param name="p" value="2"/>
-            </p:menuitem>
-            <p:menuitem value="Sortie et renouvellement" outcome="/sortie" icon="pi pi-fw pi-user-minus">
-                <f:param name="p" value="3"/>
-            </p:menuitem>
-            <p:menuitem value="Badge" outcome="/badge" icon="pi pi-fw pi-id-card">
-                <f:param name="p" value="4"/>
-            </p:menuitem>
-            <p:menuitem value="Clé" outcome="/cle" icon="pi pi-fw pi-key">
-                <f:param name="p" value="5"/>
-            </p:menuitem>
         </p:tabMenu>
     </div>
-    
+
 </ui:composition>

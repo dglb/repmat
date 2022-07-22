@@ -22,18 +22,15 @@
 
     <h:body style="margin: 120px 80px;">
 
-        <ui:include src="./menu.xhtml"></ui:include> 
+        <ui:include src="./menu.xhtml"></ui:include>
 
         <h1 style="text-align: center;">Récapitulatif de processus ZRR et convention</h1>
-
-        <p:button value="Nouvel entrant" styleClass="ui-button-raised" style="position: absolute; right: 80px;" outcome="ne" icon="pi pi-plus"/>
-
 
         <div class="card" style="padding-top: 50px">
             <h:form id="form">
 
-                <p:dataTable widgetVar="personneTable" var="personne" value="#{entreeView.listPers}" emptyMessage="No person found with given criteria" filteredValue="#{entreeView.filteredListPers}" filterBy="#{entreeView.filterBy}" 
-                             rowKey="#{personne.refnom}" selectionMode="single" selection="#{entreeView.selectedPersonne}" 
+                <p:dataTable widgetVar="personneTable" var="personne" value="#{entreeView.listPers}" emptyMessage="No person found with given criteria" filteredValue="#{entreeView.filteredListPers}" filterBy="#{entreeView.filterBy}"
+                             rowKey="#{personne.refnom}" selectionMode="single" selection="#{entreeView.selectedPersonne}"
                              paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" pageLinks="5" currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" rows="10" rowsPerPageTemplate="10,20, {ShowAll|'All'}">
 
                     <p:ajax event="rowSelect" update=":form:manage-product-content" oncomplete="PF('manageProductDialog').show()"/>
@@ -50,7 +47,7 @@
 
                     <p:column headerText="Prénom" sortBy="#{personne.prenom}" filterBy="#{personne.prenom}">
                         <h:outputText value="#{personne.prenom}" />
-                    </p:column>      
+                    </p:column>
 
                     <p:column field="localDateDebut" headerText="Date de début" filterMatchMode="range" sortOrder="desc">
                         <f:facet name="filter">
@@ -64,15 +61,15 @@
                             <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" monthNavigator="true" yearNavigator="true" showButtonBar="true" pattern="dd/MM/yyyy"/>
                         </f:facet>
                         <p:outputLabel value="#{entreeView.formatLocalDate(personne.localDateFin)}"/>
-                    </p:column>       
+                    </p:column>
 
                     <p:column headerText="Encadrant" sortBy="#{personne.contactLabo}" filterBy="#{personne.contactLabo}">
                         <h:outputText value="#{personne.contactLabo}" />
-                    </p:column>    
+                    </p:column>
 
                     <p:column headerText="Site" sortBy="#{personne.site}" filterBy="#{personne.site}">
                         <h:outputText value="#{personne.site}" />
-                    </p:column>        
+                    </p:column>
 
                     <ui:remove>
                         <p:column field="dateNaissance" headerText="Date de naissance" filterMatchMode="range">
@@ -99,22 +96,22 @@
 
 
 
-                    <!--     
+                    <!--
 
                                         <p:column field="localDateDebut" headerText="Date début" filterMatchMode="range" sortOrder="desc">
                                             <f:facet name="filter">
-                                                <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" monthNavigator="true" yearNavigator="true" /> 
+                                                <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" monthNavigator="true" yearNavigator="true" />
                                             </f:facet>
                                         </p:column>
-                                          
-                                        
+
+
                                         <p:column field="toLocalDate(dateDebut)" headerText="Date de début" filterMatchMode="range">
                                             <f:facet name="filter">
                                                 <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>
                                             </f:facet>
                                         </p:column>
-                                       
-                    
+
+
                                         <p:column field="toLocalDate(dateNaissance)" headerText="Date" filterMatchMode="range">
                                             <f:facet name="filter">
                                                 <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>
@@ -126,7 +123,7 @@
                               sortBy="#{entreeView.toLocalDate(personne.dateDebut)}"
                               sortOrder="desc" field="dateDebut">
                         <f:facet name="filter">
-                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>  
+                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>
                         </f:facet>
                         <p:outputLabel value="#{entreeView.toLocalDate(personne.dateDebut)}"/>
                     </p:column>
@@ -135,7 +132,7 @@
                               filterBy="{personne.dateDebut}"
                               sortBy="{personne.dateDebut}">
                         <f:facet name="filter">
-                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>  
+                            <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()"/>
                         </f:facet>
                         <p:outputLabel value="{personne.dateDebut}">
                             <f:convertDateTime pattern="dd/MM/yyyy" />
@@ -150,21 +147,21 @@
                     </p:column>
                     -->
                     <!--
-           
-                              <p:column id="date" 
+
+                              <p:column id="date"
                                         headerText="Date"
                                         filterBy="{personne.dateNaissance}"
                                         sortBy="{personne.dateNaissance}">
                                   <f:facet name="filter">
-                                      <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" pattern="dd/MM/yyyy"/>  
+                                      <p:datePicker selectionMode="range" onchange="PF('personneTable').filter()" pattern="dd/MM/yyyy"/>
                                   </f:facet>
                                   <p:outputLabel value="{personne.dateNaissance}">
                                       <f:convertDateTime pattern="dd/MM/yyyy" />
                                   </p:outputLabel>
                               </p:column>
-          
-          
-                              <p:column id="date2" 
+
+
+                              <p:column id="date2"
                                         headerText="Date"
                                         filterFunction="{personne.dateNaissance}"
                                         filterBy="{personne.dateNaissance}">
@@ -190,9 +187,9 @@
                             </p:commandButton>
                         </ui:remove>
 
-                        <p:button icon="pi pi-pencil" 
+                        <p:button icon="pi pi-pencil"
                                   styleClass="edit-button rounded-button ui-button-info"
-                                  outcome="ne.xhtml?refnom=#{personne.refnom}">                         
+                                  outcome="ne.xhtml?refnom=#{personne.refnom}">
                         </p:button>
                     </p:column>
 
@@ -220,7 +217,7 @@
                     </p:outputPanel>
 
                     <f:facet name="footer">
-                        <p:commandButton value="Save" icon="pi pi-check" 
+                        <p:commandButton value="Save" icon="pi pi-check"
                                          update="manage-product-content" process="manage-product-content @this"/>
                         <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                          class="ui-button-secondary"/>
